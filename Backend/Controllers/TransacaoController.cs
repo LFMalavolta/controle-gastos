@@ -29,28 +29,28 @@ namespace Backend.Controllers
         public async Task<ActionResult> CreateTransacao(Transacao transacao)
         {
             if (transacao.Valor <= 0)
-                return BadRequest("Valor deve ser positivo");
+                return BadRequest(new { mensagem = "Valor deve ser positivo" });
 
             var pessoa = await _context.Pessoas.FindAsync(transacao.PessoaId);
             if (pessoa == null)
-                return BadRequest("Pessoa não encontrada");
+                return BadRequest(new { mensagem = "Pessoa não encontrada" });
 
             var transacaoEhReceita = transacao.Tipo == TipoTransacao.Receita;
             if (pessoa.Idade < 18 && transacaoEhReceita)
-                return BadRequest("Menor de idade só pode ter despesas");
+                return BadRequest(new { mensagem = "Menor de idade só pode ter despesas" });
 
             var categoria = await _context.Categorias.FindAsync(transacao.CategoriaId);
             if (categoria == null)
-                return BadRequest("Categoria não encontrada");
+                return BadRequest(new { mensagem = "Categoria não encontrada" });
 
             var categoriaEhReceita = categoria.Finalidade == Finalidade.Receita;
             var transacaoEhDespesa = transacao.Tipo == TipoTransacao.Despesa;
             if (transacaoEhDespesa && categoriaEhReceita)
-                return BadRequest("Categoria não permite despesa");
+                return BadRequest(new { mensagem = "Categoria não permite despesa" });
 
             var categoriaEhDespesa = categoria.Finalidade == Finalidade.Despesa;
             if (transacaoEhReceita && categoriaEhDespesa)
-                return BadRequest("Categoria não permite receita");
+                return BadRequest(new { mensagem = "Categoria não permite receita" });
 
             _context.Transacoes.Add(transacao);
             await _context.SaveChangesAsync();

@@ -26,7 +26,7 @@ namespace Backend.Controllers
         public async Task<ActionResult<Pessoa>> CreatePessoa(Pessoa pessoa)
         {
             if (string.IsNullOrWhiteSpace(pessoa.Nome))
-                return BadRequest("Nome é obrigatório");
+                return BadRequest(new { mensagem = "Nome é obrigatório" });
 
             _context.Pessoas.Add(pessoa);
             await _context.SaveChangesAsync();

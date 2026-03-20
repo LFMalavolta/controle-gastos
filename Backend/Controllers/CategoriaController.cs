@@ -27,7 +27,7 @@ namespace Backend.Controllers
         {
             // Validação da descrição da categoria
             if (string.IsNullOrWhiteSpace(categoria.Descricao))
-                return BadRequest("Descrição é obrigatória");
+                return BadRequest(new { mensagem = "Descrição é obrigatória" });
 
             _context.Categorias.Add(categoria);
             await _context.SaveChangesAsync();

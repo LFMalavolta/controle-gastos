@@ -57,17 +57,21 @@ function App() {
       return;
     }
 
-    await createPessoa({
-      nome: nome,
-      idade: Number(idade),
-    });
+    try {
+      await createPessoa({
+        nome,
+        idade: Number(idade),
+      });
 
-    setNome("");
-    setIdade("");
+      setNome("");
+      setIdade("");
 
-    loadPessoas();
+      loadPessoas();
 
-    alert("Pessoa criada com sucesso!");
+      alert("Pessoa criada com sucesso!");
+    } catch (error: any) {
+        alert(error.message);
+    }
   }
 
   async function handleAddTransacao() {
@@ -76,23 +80,28 @@ function App() {
       return;
     }
 
-    await createTransacao({
-      descricao,
-      valor: Number(valor),
-      tipo: Number(tipo),
-      pessoaId: Number(pessoaId),
-      categoriaId: Number(categoriaId),
-    });
-    setDescricao("");
-    setValor("");
-    setPessoaId("");
-    setCategoriaId("");
+    try {
+      await createTransacao({
+        descricao,
+        valor: Number(valor),
+        tipo: Number(tipo),
+        pessoaId: Number(pessoaId),
+        categoriaId: Number(categoriaId),
+      });
 
-    loadPessoas();
-    loadRelatorio();
-    loadRelatorioCategorias();
+      setDescricao("");
+      setValor("");
+      setPessoaId("");
+      setCategoriaId("");
 
-    alert("Transação criada com sucesso!");
+      loadPessoas();
+      loadRelatorio();
+      loadRelatorioCategorias();
+
+      alert("Transação criada com sucesso!");
+    } catch (error: any) {
+        alert(error.message);
+    }
   }
 
   async function handleAddCategoria() {
@@ -101,25 +110,29 @@ function App() {
       return;
     }
 
-    await createCategoria({
-      descricao: descricaoCategoria,
-      finalidade: Number(finalidade),
-    });
+    try {
+      await createCategoria({
+        descricao: descricaoCategoria,
+        finalidade: Number(finalidade),
+      });
 
-    setDescricaoCategoria("");
-    setFinalidade("0");
+      setDescricaoCategoria("");
+      setFinalidade("0");
 
-    loadCategorias();
-    loadRelatorioCategorias();
+      loadCategorias();
+      loadRelatorioCategorias();
 
-    alert("Categoria criada com sucesso!");
+      alert("Categoria criada com sucesso!");
+    } catch (error: any) {
+        alert(error.message);
+    }
   }
 
   return (
     <div style={{ maxWidth: "600px", margin: "auto", fontFamily: "Arial" }}>
       <h1>Controle de Gastos</h1>
 
-      <h2>Adicionar Pessoa</h2>
+      <h2 style={{ marginTop: "20px" }}>Adicionar Pessoa</h2>
 
       <input
         type="text"

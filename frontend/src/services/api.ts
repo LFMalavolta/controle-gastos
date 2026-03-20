@@ -36,7 +36,12 @@ export async function createTransacao(transacao: any) {
     body: JSON.stringify(transacao),
   });
 
-  return response.json();
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.mensagem);
+    }
+
+    return response.json();
 }
 
 export async function createCategoria(categoria: any) {
@@ -48,7 +53,12 @@ export async function createCategoria(categoria: any) {
     body: JSON.stringify(categoria),
   });
 
-  return response.json();
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.mensagem);
+    }
+
+    return response.json();
 }
 
 export async function getRelatorioCategorias() {
